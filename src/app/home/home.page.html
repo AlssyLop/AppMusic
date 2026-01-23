@@ -1,20 +1,35 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
+    <ion-title class="ion-text-center" style="font-size: 1.3em;">
+      Musical Genres Carousel
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <swiper-container 
+    slides-per-view="1"
+    [loop]="true"
+    class="my-custom-swiper"
+  >
+    <swiper-slide *ngFor="let genre of musicalGenres">
+      <div class="slide-content" [style.background-color]="genre.color">
+        <ion-title class="title" style="text-align: center; font-size: 1.9em; font-weight: bold;">{{ genre.name }}</ion-title>
+
+        <img class="slide-image" src="{{ genre.imageUrl }}" alt="{{ genre.name }}" />
+        <p>{{ genre.description }}</p>
+        <h4 class="title" style="margin-top: 0px;">Subgéneros:</h4>
+        <ion-grid style="padding: 0px;">
+          <ion-row>
+            <ion-col *ngFor="let subgenre of genre.subgenres" size="auto" style="padding: 0px;">
+              <ion-chip>{{ subgenre }}</ion-chip>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </div>
+    </swiper-slide>
+  </swiper-container>
+  
 </ion-content>
