@@ -1,20 +1,17 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title class="ion-text-center" style="font-size: 1.3em;">
-      Musical Genres Carousel
-    </ion-title>
+<ion-header >
+  <ion-toolbar [translucent]="true" [style.--background]="backgroundColor"]>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [style.--background]="backgroundColor"]>
 
   <swiper-container 
     slides-per-view="1"
     [loop]="true"
     class="my-custom-swiper"
   >
-    <swiper-slide *ngFor="let genre of musicalGenres">
-      <div class="slide-content" [style.background-color]="genre.color">
+    <swiper-slide  *ngFor="let genre of musicalGenres">
+      <!-- <div class="slide-content" [style.background-color]="genre.color">
         <ion-title class="title" style="text-align: center; font-size: 1.9em; font-weight: bold;">{{ genre.name }}</ion-title>
 
         <img class="slide-image" src="{{ genre.imageUrl }}" alt="{{ genre.name }}" />
@@ -27,9 +24,22 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-
-      </div>
+      </div> -->
+      <ion-card  class="slide-content" [style.background-color]="colorCard" [style.color]="colorText" >
+        <img  class="slide-image" src="{{ genre.imageUrl }}" alt="{{ genre.name }}" />
+        <ion-card-header >
+          <ion-card-title [style.color]="colorTitle">{{ genre.name }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content style="font-size: 1.2em; text-align: justify;">{{ genre.description }}</ion-card-content>
+        <ion-grid style="padding: 0px;">
+          <ion-row>
+            <ion-col *ngFor="let subgenre of genre.subgenres" size="auto" style="padding: 0px;">
+              <ion-chip >{{ subgenre }}</ion-chip>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
     </swiper-slide>
   </swiper-container>
-  
+  <ion-button class="ion-text-center" fill="outline" expand="block" (click)="changeColorTheme()">Change Theme</ion-button>
 </ion-content>
