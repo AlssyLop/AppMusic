@@ -1,39 +1,57 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import { NgFor } from '@angular/common';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { StorageService } from '../services/storage.service';
+
+import { Router } from '@angular/router';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonContent, NgFor],
+  imports: [IonHeader, IonToolbar, IonContent, NgFor, ScrollingModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class HomePage {
-  colorTitle:string = 'var(--color-TitleCard-light)';
-  colorCard:string = 'var(--color-Card-light)';
-  colorText:string = 'var(--color-Text-light)';
-  backgroundColor:string = 'var(--color-Background-light)';
-  changeTheme:boolean = false;
+export class HomePage implements OnInit {
+  colorTitle:string = '';
+  colorCard:string = '';
+  colorText:string = '';
+  backgroundColor:string = '';
+  private Theme:boolean = false;
 
-  constructor() {}
-
-  changeColorTheme() {
+  constructor(private router:Router, private storage:StorageService) {
     
+  }
 
-    if (this.changeTheme) {
-      this.colorTitle = 'var(--color-TitleCard-dark)';
-      this.colorCard = 'var(--color-Card-dark)';
-      this.colorText = 'var(--color-Text-dark)';
-      this.backgroundColor = 'var(--color-Background-dark)';
-    } else {
-      this.colorTitle = 'var(--color-TitleCard-light)';
-      this.colorCard = 'var(--color-Card-light)';
-      this.colorText = 'var(--color-Text-light)';
-      this.backgroundColor = 'var(--color-Background-light)';
+  async ngOnInit() {
+    if (await this.storage.getData('theme') === null){
+      //Iniciar tema
+      await this.changeTheme();
+    }else{
+      this.colorTheme();
     }
-    this.changeTheme = !this.changeTheme;
+  }
+
+  public async changeTheme() {
+    let theme:string = await this.storage.getData('theme') === 'light'? 'dark':'light';
+    await this.storage.setData('theme', theme);
+
+    this.storage.setData('colorTitle', 'var(--color-TitleCard-'+theme+')');
+    this.storage.setData('colorCard', 'var(--color-Card-'+theme+')');
+    this.storage.setData('colorText', 'var(--color-Text-'+theme+')');
+    this.storage.setData('backgroundColor', 'var(--color-Background-'+theme+')');
+
+    this.colorTheme();
+    
+  }
+
+  private async colorTheme(){
+    this.colorTitle = await this.storage.getData('colorTitle');
+    this.colorCard = await this.storage.getData('colorCard');
+    this.colorText = await this.storage.getData('colorText');
+    this.backgroundColor = await this.storage.getData('backgroundColor');
   }
 
   musicalGenres:MusicalGenre[] = [
@@ -78,7 +96,12 @@ export class HomePage {
       imageUrl: 'assets/images/jazz.jpeg'
     }
   ];
+
+  goToIntro(){
+    this.router.navigateByUrl('/intro')
+  }
 }
+
 
 interface MusicalGenre {
   name: string;

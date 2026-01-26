@@ -41,5 +41,15 @@
       </ion-card>
     </swiper-slide>
   </swiper-container>
-  <ion-button class="ion-text-center" fill="outline" expand="block" (click)="changeColorTheme()">Change Theme</ion-button>
+  <div>
+    <ion-button class="ion-text-center" fill="outline" expand="block" (click)="changeTheme()">
+      Change Theme
+    </ion-button>
+  </div>
+
+  <div>
+    <ion-button (click)="goToIntro()" fill="outline" expand="block" fill="clear" shape="round">
+      Go to intro
+    </ion-button>
+  </div>
 </ion-content>
