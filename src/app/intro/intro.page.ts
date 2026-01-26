@@ -1,20 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-intro',
   templateUrl: './intro.page.html',
   styleUrls: ['./intro.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule]
 })
 export class IntroPage implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router, private storage:StorageService) { }
 
   ngOnInit() {
+  }
+
+  async backHome(){
+    await this.storage.setData('introView', true);
+    this.router.navigateByUrl('/home');
   }
 
 }

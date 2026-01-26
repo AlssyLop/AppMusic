@@ -98,7 +98,8 @@ export class HomePage implements OnInit {
   ];
 
   goToIntro(){
-    this.router.navigateByUrl('/intro')
+    this.storage.remove('introView');
+    this.router.navigateByUrl('/intro');
   }
 }
 
