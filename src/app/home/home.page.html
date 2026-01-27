@@ -11,20 +11,7 @@
     class="my-custom-swiper"
   >
     <swiper-slide  *ngFor="let genre of musicalGenres">
-      <!-- <div class="slide-content" [style.background-color]="genre.color">
-        <ion-title class="title" style="text-align: center; font-size: 1.9em; font-weight: bold;">{{ genre.name }}</ion-title>
 
-        <img class="slide-image" src="{{ genre.imageUrl }}" alt="{{ genre.name }}" />
-        <p>{{ genre.description }}</p>
-        <h4 class="title" style="margin-top: 0px;">Subgéneros:</h4>
-        <ion-grid style="padding: 0px;">
-          <ion-row>
-            <ion-col *ngFor="let subgenre of genre.subgenres" size="auto" style="padding: 0px;">
-              <ion-chip>{{ subgenre }}</ion-chip>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div> -->
       <ion-card  class="slide-content" [style.background-color]="colorCard" [style.color]="colorText" >
         <img  class="slide-image" src="{{ genre.imageUrl }}" alt="{{ genre.name }}" />
         <ion-card-header >

@@ -3,9 +3,12 @@ import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/stan
 import { NgFor } from '@angular/common';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { StorageService } from '../services/storage.service';
+import { ThemeService } from '../services/theme.service';
 
 import { Router } from '@angular/router';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { Theme } from '../models/theme.model';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -19,40 +22,38 @@ export class HomePage implements OnInit {
   colorCard:string = '';
   colorText:string = '';
   backgroundColor:string = '';
-  private Theme:boolean = false;
 
-  constructor(private router:Router, private storage:StorageService) {
+  constructor(
+    private router:Router, 
+    private storage:StorageService,
+    private themeService:ThemeService,
+    private navCtrl: NavController
+  ) {
     
   }
 
   async ngOnInit() {
-    if (await this.storage.getData('theme') === null){
-      //Iniciar tema
-      await this.changeTheme();
-    }else{
-      this.colorTheme();
-    }
+    await this.themeService.initializeTheme();
+    await this.loadTheme();
   }
 
-  public async changeTheme() {
-    let theme:string = await this.storage.getData('theme') === 'light'? 'dark':'light';
-    await this.storage.setData('theme', theme);
-
-    this.storage.setData('colorTitle', 'var(--color-TitleCard-'+theme+')');
-    this.storage.setData('colorCard', 'var(--color-Card-'+theme+')');
-    this.storage.setData('colorText', 'var(--color-Text-'+theme+')');
-    this.storage.setData('backgroundColor', 'var(--color-Background-'+theme+')');
-
-    this.colorTheme();
-    
+  async ionViewWillEnter() {
+    await this.loadTheme();
   }
 
-  private async colorTheme(){
-    this.colorTitle = await this.storage.getData('colorTitle');
-    this.colorCard = await this.storage.getData('colorCard');
-    this.colorText = await this.storage.getData('colorText');
-    this.backgroundColor = await this.storage.getData('backgroundColor');
+  private async loadTheme(){
+    const theme:Theme = await this.themeService.LoadTheme();
+    this.colorTitle = theme.colorTitle;
+    this.colorCard = theme.colorCard;
+    this.colorText = theme.colorText;
+    this.backgroundColor = theme.backgroundColor;
   }
+
+  public async changeTheme(){
+    await this.themeService.changeTheme();
+    await this.loadTheme();
+  }
+  
 
   musicalGenres:MusicalGenre[] = [
     {
@@ -98,8 +99,8 @@ export class HomePage implements OnInit {
   ];
 
   goToIntro(){
-    this.storage.remove('introView');
-    this.router.navigateByUrl('/intro');
+    this.storage.setData('introView', false);
+    this.navCtrl.navigateRoot('/intro');
   }
 }
 
