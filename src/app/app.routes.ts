@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { IntroGuard } from './guards/intro-guard';
+import { HomeIntroGuard, HomeGuard, LoginRegisterGuard } from './guards/intro-guard';
 
 export const routes: Routes = [
   {
     path: 'home',
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage), canActivate:[IntroGuard]
+    loadComponent: () => import('./home/home.page').then((m) => m.HomePage), canActivate:[HomeGuard, HomeIntroGuard]
   },
   {
     path: '',
@@ -13,10 +13,14 @@ export const routes: Routes = [
   },
   {
     path: 'intro',
-    loadComponent: () => import('./intro/intro.page').then( m => m.IntroPage)
+    loadComponent: () => import('./intro/intro.page').then( m => m.IntroPage), canActivate:[HomeIntroGuard]
   },
   {
     path: 'login',
-    loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
+    loadComponent: () => import('./login/login.page').then( m => m.LoginPage), canActivate:[LoginRegisterGuard]
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./register/register.page').then( m => m.RegisterPage), canActivate:[LoginRegisterGuard]
   },
 ];

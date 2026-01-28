@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
 import { ThemeService } from '../services/theme.service';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { Theme } from '../models/theme.model';
 import { MusicalGenre } from '../models/musicalgenre.model';
 import { NavController } from '@ionic/angular';
+import { MockDataService } from '../services/mock-data.service';
 
 @Component({
   selector: 'app-intro',
@@ -25,10 +25,10 @@ export class IntroPage implements OnInit{
   backgroundColor:string = '';
 
   constructor(
-    private router:Router, 
     private storage:StorageService,
     private themeService:ThemeService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private mockDataService:MockDataService
   ) { }
 
   async ngOnInit() {
@@ -50,6 +50,8 @@ export class IntroPage implements OnInit{
 
   async backHome(){
     await this.storage.setData('introView', true);
+    const email:string = (await this.storage.getData('user'))?.email;
+    await this.mockDataService.setIntroViewByEmail(email, true);
     this.navCtrl.navigateRoot('/home');
   }
 

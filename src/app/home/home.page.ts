@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonContent } from '@ionic/angular/standalone';
 import { NgFor } from '@angular/common';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { StorageService } from '../services/storage.service';
 import { ThemeService } from '../services/theme.service';
 
-import { Router } from '@angular/router';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { Theme } from '../models/theme.model';
 import { NavController } from '@ionic/angular';
+import { User } from '../models/user.model';
+import { MockDataService } from '../services/mock-data.service';
+
 
 @Component({
   selector: 'app-home',
@@ -22,15 +24,13 @@ export class HomePage implements OnInit {
   colorCard:string = '';
   colorText:string = '';
   backgroundColor:string = '';
+  user:User | null = null;
 
   constructor(
-    private router:Router, 
     private storage:StorageService,
     private themeService:ThemeService,
-    private navCtrl: NavController
-  ) {
-    
-  }
+    private navCtrl: NavController,
+  ) { }
 
   async ngOnInit() {
     await this.themeService.initializeTheme();
@@ -99,7 +99,6 @@ export class HomePage implements OnInit {
   ];
 
   goToIntro(){
-    this.storage.setData('introView', false);
     this.navCtrl.navigateRoot('/intro');
   }
 }

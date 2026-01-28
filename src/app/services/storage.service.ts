@@ -1,3 +1,4 @@
+import { a } from '@angular/cdk/bidi-module.d-IN1Vp56w';
 import { Injectable } from '@angular/core';
 import {Storage} from "@ionic/storage-angular"
 
@@ -27,7 +28,7 @@ export class StorageService {
     this._storage?.set(key, value);
   }
 
-  public async getData(key:string):Promise<string> {
+  public async getData(key:string):Promise<any> {
     await this.ready();
     return this._storage?.get(key);
   }
