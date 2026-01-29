@@ -13,22 +13,22 @@
     </ion-toolbar>
   </ion-header>
   <swiper-container 
-    slides-per-view="1"
+    slides-per-view="3"
     [loop]="true"
     class="my-custom-swiper"
   >
-    <swiper-slide  *ngFor="let genre of musicalGenres">
+    <swiper-slide  *ngFor="let album of albums">
 
-      <ion-card  class="slide-content" [style.background-color]="colorCard" [style.color]="colorText" >
-        <img  class="slide-image" src="{{ genre.imageUrl }}" alt="{{ genre.name }}" />
-        <ion-card-header >
-          <ion-card-title [style.color]="colorTitle">{{ genre.name }}</ion-card-title>
+      <ion-card (click)="loadSongsByAlbum(album.id)"  class="slide-content" [style.background-color]="colorCard" [style.color]="colorText" >
+        <img  class="slide-image" [src]="album.image" alt="{{ album.name }}" />
+        <ion-card-header class="ion-justify-content-start ion-no-padding ion-padding-top" >
+          <ion-card-title [style.color]="colorTitle">{{ album.name }}</ion-card-title>
         </ion-card-header>
-        <ion-card-content style="font-size: 1.2em; text-align: justify;">{{ genre.description }}</ion-card-content>
+        <ion-card-content class="card-content">{{ album.label }} - {{ album.release_date }}</ion-card-content>
         <ion-grid style="padding: 0px;">
           <ion-row>
-            <ion-col *ngFor="let subgenre of genre.subgenres" size="auto" style="padding: 0px;">
-              <ion-chip >{{ subgenre }}</ion-chip>
+            <ion-col *ngFor="let genre of album.genres"  >
+              <ion-chip class="ion-no-padding ion-no-margin">{{ genre }}</ion-chip>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -37,3 +37,46 @@
   </swiper-container>
 
 </ion-content>
+
+
+<ion-footer>
+  <ion-grid>
+    <ion-row >
+      <ion-col class="ion-padding">
+        <ion-text  color="primary">
+          <h3 class="ion-no-margin ion-text-center" >Song</h3>
+        </ion-text>
+      </ion-col>
+      <ion-col class=" ion-padding ion-text-center">
+        <ion-icon style="font-size: 1.5em;" name="heart"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-text-start" >
+        <ion-text color="primary">
+          <p class="ion-no-margin ion-margin-start">0:00</p>
+        </ion-text>
+      </ion-col>
+      <ion-col class= "ion-text-end">
+        <ion-text color="primary">
+          <p class="ion-no-margin ion-margin-end">0:00</p>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+    <ion-progress-bar class="ion-no-margin ion-no-padding" [value]="0.5"></ion-progress-bar>
+  <ion-grid >
+    <ion-row class="ion-padding ion-text-center">
+      <ion-col>
+        <ion-icon style="font-size: 1.8em;" name="play-skip-back-outline"></ion-icon>
+      </ion-col>
+      <ion-col>
+        <ion-icon style="font-size: 1.8em;" name="play"></ion-icon>
+      </ion-col>
+      <ion-col >
+        <ion-icon style="font-size: 1.8em;" name="play-skip-forward-outline"></ion-icon>
+      </ion-col>
+    </ion-row>
+    
+  </ion-grid>
+</ion-footer>
