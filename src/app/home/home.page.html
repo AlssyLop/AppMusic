@@ -1,10 +1,17 @@
-<ion-header >
-  <ion-toolbar [translucent]="true" [style.--background]="backgroundColor"]>
+<ion-header  >
+  <ion-toolbar  [style.--background]="backgroundColor"]>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content [style.--background]="backgroundColor"]>
-
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons class="ion-margin-end" style="border-radius: 10px;" slot="end">
+        <ion-menu-button ></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
   <swiper-container 
     slides-per-view="1"
     [loop]="true"
@@ -28,15 +35,5 @@
       </ion-card>
     </swiper-slide>
   </swiper-container>
-  <div>
-    <ion-button class="ion-text-center" fill="outline" expand="block" (click)="changeTheme()">
-      Change Theme
-    </ion-button>
-  </div>
 
-  <div>
-    <ion-button (click)="goToIntro()" fill="outline" expand="block" fill="clear" shape="round">
-      Go to intro
-    </ion-button>
-  </div>
 </ion-content>

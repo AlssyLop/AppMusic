@@ -51,8 +51,9 @@ export class IntroPage implements OnInit{
   async backHome(){
     await this.storage.setData('introView', true);
     const email:string = (await this.storage.getData('user'))?.email;
+    await this.storage.setData('user', await this.mockDataService.getUserByEmail(email));
     await this.mockDataService.setIntroViewByEmail(email, true);
-    this.navCtrl.navigateRoot('/home');
+    this.navCtrl.navigateRoot('/menu/home');
   }
 
   musicalGenres:MusicalGenre[] = [

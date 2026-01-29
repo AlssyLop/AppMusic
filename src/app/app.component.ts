@@ -4,6 +4,7 @@ import {register} from 'swiper/element/bundle';
 import { StorageService } from './services/storage.service';
 import { Router } from '@angular/router';
 import { OnInit } from '@angular/core';
+import { ThemeService } from './services/theme.service';
 
 register();
 
@@ -13,12 +14,14 @@ register();
   imports: [IonApp, IonRouterOutlet],
 })
 export class AppComponent implements OnInit {
-  constructor(private storage: StorageService, private router: Router) {
+  constructor(private storage: StorageService, private router: Router, private themeService: ThemeService) {
     document.addEventListener('ionPause', async () => {
       await this.handleAppPause();
     });
   }
   async ngOnInit() {
+    await this.themeService.initializeTheme();
+
     console.log('App is going to background, logging out user.');
     await this.handleAppPause();
     

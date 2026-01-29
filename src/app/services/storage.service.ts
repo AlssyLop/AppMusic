@@ -1,4 +1,3 @@
-import { a } from '@angular/cdk/bidi-module.d-IN1Vp56w';
 import { Injectable } from '@angular/core';
 import {Storage} from "@ionic/storage-angular"
 

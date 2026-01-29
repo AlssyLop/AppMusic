@@ -34,11 +34,27 @@ export class HomePage implements OnInit {
 
   async ngOnInit() {
     await this.themeService.initializeTheme();
-    await this.loadTheme();
+
+    // react to theme changes in real time
+    this.themeService.theme$.subscribe((theme) => {
+      if (theme) {
+        this.colorTitle = theme.colorTitle;
+        this.colorCard = theme.colorCard;
+        this.colorText = theme.colorText;
+        this.backgroundColor = theme.backgroundColor;
+      }
+    });
+
+    // initial load
+    const theme = await this.themeService.LoadTheme();
+    this.colorTitle = theme.colorTitle;
+    this.colorCard = theme.colorCard;
+    this.colorText = theme.colorText;
+    this.backgroundColor = theme.backgroundColor;
   }
 
   async ionViewWillEnter() {
-    await this.loadTheme();
+    // nothing required: reactive subscription keeps values updated
   }
 
   private async loadTheme(){
@@ -49,13 +65,7 @@ export class HomePage implements OnInit {
     this.backgroundColor = theme.backgroundColor;
   }
 
-  public async changeTheme(){
-    await this.themeService.changeTheme();
-    await this.loadTheme();
-  }
-  
-
-  musicalGenres:MusicalGenre[] = [
+  musicalGenres:MusicalGenre[] = [ 
     {
       name: 'Pop',
       description: 'Género musical popular surgido a mediados de los años 50 en Reino Unido y EE.UU., caracterizado por melodías pegadizas, ritmo marcado y un enfoque comercial directo al público masivo.',
@@ -99,7 +109,7 @@ export class HomePage implements OnInit {
   ];
 
   goToIntro(){
-    this.navCtrl.navigateRoot('/intro');
+    this.navCtrl.navigateRoot('menu/intro');
   }
 }
 

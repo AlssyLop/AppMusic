@@ -3,12 +3,13 @@ import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } 
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 
 import { addIcons } from 'ionicons';
-import { arrowBack, eyeOff, eye} from 'ionicons/icons';
+import { arrowBack, eyeOff, eye, close} from 'ionicons/icons';
 
 addIcons({
   'arrow-back': arrowBack,
   'eye-off':eyeOff,
-  'eye':eye
+  'eye':eye,
+  'close': close
 });
 
 import { routes } from './app/app.routes';

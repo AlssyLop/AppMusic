@@ -69,7 +69,7 @@ export class LoginPage implements OnInit {
         await this.storage.setData('login', true);
         await this.storage.setData('user', result.user);
         this.storage.setData('introView', result.user?.introView);
-        this.navCtrl.navigateForward('home');
+        this.navCtrl.navigateForward('menu/home');
       } else {
         await this.presentAlert('Error de Autenticación', result.message || 'Credenciales inválidas.');
       }
