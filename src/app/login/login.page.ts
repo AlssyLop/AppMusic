@@ -34,9 +34,8 @@ export class LoginPage implements OnInit {
     });
   }
 
-  async ngOnInit() {
-    await this.storage.remove("user");
-    await this.storage.remove("introView");
+  ngOnInit() {
+    
   }
 
 
@@ -68,7 +67,11 @@ export class LoginPage implements OnInit {
       if (result.success) {
         await this.storage.setData('login', true);
         await this.storage.setData('user', result.user);
-        this.storage.setData('introView', result.user?.introView);
+        await this.mockDataService.getUserByEmail(email).then(async (user) => {
+          if (user) {
+            await this.storage.setData('introView', user.introView);
+          }
+        });
         this.navCtrl.navigateForward('menu/home');
       } else {
         await this.presentAlert('Error de Autenticación', result.message || 'Credenciales inválidas.');

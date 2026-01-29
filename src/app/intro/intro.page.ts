@@ -49,10 +49,12 @@ export class IntroPage implements OnInit{
   }
 
   async backHome(){
-    await this.storage.setData('introView', true);
-    const email:string = (await this.storage.getData('user'))?.email;
-    await this.storage.setData('user', await this.mockDataService.getUserByEmail(email));
-    await this.mockDataService.setIntroViewByEmail(email, true);
+    if (await this.storage.getData('introView') === false) {
+      await this.storage.setData('introView', true);
+      const email:string = (await this.storage.getData('user'))?.email;
+      await this.mockDataService.setIntroViewByEmail(email, true);
+      await this.storage.setData('user', await this.mockDataService.getUserByEmail(email));
+    }
     this.navCtrl.navigateRoot('/menu/home');
   }
 

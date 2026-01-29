@@ -3,7 +3,8 @@ import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } 
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 
 import { addIcons } from 'ionicons';
-import { playSkipBackOutline, playSkipForwardOutline, arrowBack, eyeOff, eye, close, heart, play } from 'ionicons/icons';
+import {pauseOutline, playSkipBackOutline, playSkipForwardOutline, arrowBack, eyeOff, eye, close, heart, play, musicalNotes } from 'ionicons/icons';
+
 
 addIcons({
   'arrow-back': arrowBack,
@@ -13,7 +14,9 @@ addIcons({
   'heart': heart,
   'play': play,
   'play-skip-back-outline': playSkipBackOutline,
-  'play-skip-forward-outline': playSkipForwardOutline
+  'play-skip-forward-outline': playSkipForwardOutline,
+  'musical-notes':musicalNotes,
+  'pause-outline': pauseOutline
 });
 
 import { routes } from './app/app.routes';

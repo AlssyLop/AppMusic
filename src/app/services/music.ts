@@ -34,7 +34,7 @@ export class Music {
   }
 
   async getSongsByAlbum(albumId: string){
-    return fetch(`${this.URL_API}/tracks/albums/${albumId}`)
+    return await fetch(`${this.URL_API}/tracks/album/${albumId}`)
       .then(response => response.json())
       .then(data => {
         return data;
